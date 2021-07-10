@@ -2,9 +2,12 @@
 #include <stdlib.h>
 #include<string.h>
 #include<time.h>
+
+int size_N = 1000; // small size
+int size_N = 10000; // medium size
+//int size_N = 100000; // Large size
 struct student{
     char student_name[20];
-
     int student_id;
     int student_birth_day;
     int student_birth_month;
@@ -30,7 +33,7 @@ clock_t InsertFrontArr(struct student s) //Returns time taken for insertion.
     struct student temp=s; // insert student at first position.
     temp=Arr[i];
     Arr[i]=s;
-    while(Arr[i+1].student_birth_day!=-1) //shift the rest of elements by 1 position 
+    while(Arr[i+1].student_birth_day!=-1) //shift the rest of elements by 1 position
     {
         s=Arr[i+1];
         Arr[i+1]=temp;
@@ -47,7 +50,7 @@ clock_t InsertEndArr(struct student s)//Returns time taken.
 {
     clock_t t = clock();
     Arr[CurrentSize]=s;
-    CurrentSize++; 
+    CurrentSize++;
     printf("time taken = %ld\n",clock()-t);
     return clock()-t;
 }
@@ -56,7 +59,7 @@ clock_t InsertMiddleArr(struct student  s,int position)//Returns time taken
 {
     clock_t t = clock();
     int i = position; //insert the student in the desired position.
-    struct student temp=s; 
+    struct student temp=s;
     temp=Arr[i];
     Arr[i]=s;
     while(Arr[i+1].student_birth_day!=-1) //shift the next students by 1 position.
@@ -71,11 +74,11 @@ clock_t InsertMiddleArr(struct student  s,int position)//Returns time taken
     printf("time taken = %ld\n",clock()-t);
     return clock()-t;
 }
- 
+
 void print()
 {
-    int i=0;
-    for(int i = 0; i < CurrentSize ; i++)
+
+    for(int i=0; i < CurrentSize ; i++)
     {
         printf("Student %dth data :\n",i);
         printf("Name %s\n",Arr[i].student_name);
@@ -97,22 +100,13 @@ struct Node* createNode()
 {
     // allocating space
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
-
-
     // inserting the required data
-    printf("\nEnter student Information : \n");
-    printf("Enter Student name: ");
-    scanf ("%s", newNode->Info.student_name);
-    printf("Enter Student ID: ");
-    scanf("%d", &newNode->Info.student_id);
-    printf("Enter Student birthday: ");
-    scanf("%d", &newNode->Info.student_birth_day);
-    printf("Enter birth month: ");
-    scanf("%d", &newNode->Info.student_birth_month);
-    printf("Enter birth Year: ");
-    scanf("%d", &newNode->Info.student_birth_year);
-    printf("Enter Last score: ");
-    scanf("%d", &newNode->Info.student_last_score);
+    strcpy(newNode->Info.student_name, "Estecklal");
+    newNode->Info.student_id=1;
+    newNode->Info.student_birth_day= 24;
+    newNode->Info.student_birth_month= 06;
+    newNode->Info.student_birth_year=1996;
+    newNode->Info.student_last_score=99;
     newNode->next = NULL;
     return newNode;
 }
@@ -125,8 +119,11 @@ void insertAtEnd(struct Node** head);
 int main()
 {
 
-    printf("Hello world!\n");   
-    struct student s1,s2,s3,s4,s5,s6;
+    printf("\n Welcome to the student information program !\n\n");
+    printf("\n Size taken by structure in the memory %zu\n", sizeof(struct student));
+    printf("\n Size taken by one Node in the linked list = %zu\n\n",sizeof(struct Node));
+
+    /*struct student s1,s2,s3,s4,s5,s6;
     s1.student_birth_day=1;
     s1.student_birth_month=1;
     s1.student_birth_year=1;
@@ -171,6 +168,7 @@ int main()
 
     N= 10;
     MakeArr();
+
     InsertEndArr(s1);
     //print(Arr);
     InsertEndArr(s2);
@@ -181,20 +179,46 @@ int main()
     InsertMiddleArr(s5,2);
     //print(Arr);
     InsertFrontArr(s6);
-    print(Arr);
+    print(Arr);*/
 
-    printf("\n Welcome to the student information program !\n\n");
-    printf("Student at the Head\n");
+    // Time parameters
+    int start=0;
+    int finish = 0;
+
+    //printf("Student at the Head\n");
     struct Node * Head= createNode();
-    printf("\nStudent at the Tail\n");
+    //printf("\nStudent at the Tail\n");
     struct Node * Tail= createNode();
     Head->next = Tail;
     Tail->next = NULL;
-    insertAtBegin(&Head);
-    insertAtMiddle(Head);
-    insertAtEnd(&Head);
 
-    displayLL(Head);
+    start = clock();
+    for ( int i =1; i<=size_N; i++)
+        {
+            insertAtBegin(&Head);
+        }
+    finish = clock();
+    printf("\nTime Taken inserting elements at the START = %f \n", (double)(finish-start)/CLOCKS_PER_SEC);
+
+        start = clock();
+    for ( int i =1; i<=size_N; i++)
+        {
+            insertAtMiddle(Head);
+        }
+    finish = clock();
+    printf("\nTime Taken inserting elements in the middle = %f \n", (double)(finish-start)/CLOCKS_PER_SEC);
+
+        start = clock();
+    for ( int i =1; i<=size_N; i++)
+        {
+            insertAtEnd(&Head);
+        }
+    finish = clock();
+    printf("\nTime Taken inserting elements at END = %f \n", (double)(finish-start)/CLOCKS_PER_SEC);
+
+
+
+   // displayLL(Head);
 
 
     return 0;
@@ -267,16 +291,17 @@ void displayLL(struct Node* head)
 
         printf("\n\n#####################################################################\n\n");
         printf("\nDisplaying information of student number : %d\n", i);
-        printf("Name: %s", tmp->Info.student_name);
+       // printf("Name: %s", tmp->Info.student_name);
+        printf(" Name: ");
+        for (int j = 0; j < 9; j++)
+            {
+                printf("%c", tmp->Info.student_name[j]);
+            }
         printf("\n ID number: %d", tmp->Info.student_id);
-        printf("\n Birth day: %d", tmp->Info.student_birth_day);
-        printf("\n Birth month: %d",tmp->Info.student_birth_month);
-        printf("\n Birth Year: %d", tmp->Info.student_birth_year);
+        printf("\n Birth date/Month/Year : %d/%d/%d",tmp->Info.student_birth_day,tmp->Info.student_birth_month,tmp->Info.student_birth_year);
         printf("\n Last score: %d", tmp->Info.student_last_score);
-
         tmp = tmp->next;
         i=i+1;
     }
     printf("\n");
 };
-

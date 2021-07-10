@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1625955177 source:d:\electronic and electrical communication\2nd year\second semester\emedded systems\assignment\musical-pancake\student_info\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+

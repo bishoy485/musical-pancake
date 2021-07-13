@@ -3,8 +3,14 @@
 #include<string.h>
 #include<time.h>
 
+/*Members of the team
+Name:  استقلال شاك ریاك كاى Section: 01 B:N: 27 
+Name: بیشوي اسامھ سلیمان ناروز Section: 01 B:N: 45
+Name:  منھ یاسر حسن محمد سعودى Section: 04 B:N: 26 
+*/
+
 int size_N = 1000; // small size
-int size_N = 10000; // medium size
+//int size_N = 10000; // medium size
 //int size_N = 100000; // Large size
 struct student{
     char student_name[20];
